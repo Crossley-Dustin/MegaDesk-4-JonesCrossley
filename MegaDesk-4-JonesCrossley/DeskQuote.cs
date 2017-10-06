@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MegaDesk_3_DustinCrossley
+namespace MegaDesk_4_JonesCrossley
 {
     public class DeskQuote
     {

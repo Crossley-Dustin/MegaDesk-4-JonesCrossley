@@ -1,4 +1,4 @@
-﻿namespace MegaDesk_3_DustinCrossley
+﻿namespace MegaDesk_4_JonesCrossley
 {
     partial class ViewAllQuotes
     {

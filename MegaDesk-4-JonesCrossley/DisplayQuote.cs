@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MegaDesk_3_DustinCrossley
+namespace MegaDesk_4_JonesCrossley
 {
     public partial class DisplayQuote : Form
     {
