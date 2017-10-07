@@ -11,7 +11,7 @@ namespace MegaDesk_4_JonesCrossley
         public enum DesktopMaterials {
             Laminate = 100, Oak = 200, Rosewood = 300, Veneer = 125, Pine = 50};
 
-        public int getSurfaceArea()
+        public int GetSurfaceArea()
         {
             int area;
             area = Width * Depth;
