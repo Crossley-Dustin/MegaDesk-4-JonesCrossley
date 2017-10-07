@@ -7,17 +7,21 @@ namespace MegaDesk_4_JonesCrossley
 {
     public class DeskQuote
     {
-        
+
         public string CustomerName { get; set; }
         public RushDays RushOrderDays { get; set; }
 
         public Desk Desk = new Desk();
         private const decimal BASE_PRICE = 200;
         private const decimal PER_DRAWER_PRICE = 50;
+        public int materialPrice = 0;
         private int[,] rushOrderPrice;
+
 
         public decimal QuoteAmount { get; set; }
         public DateTime QuoteDate { get; set; }
+        public string material { get => material; set => material = value; }
+
         public const int MIN_WIDTH = 24;
         public const int MAX_WIDTH = 96;
         public const int MIN_DEPTH = 12;
@@ -36,7 +40,7 @@ namespace MegaDesk_4_JonesCrossley
             None = 0,
             Three = 3,
             Five = 5,
-            Seven = 7         
+            Seven = 7
         }
 
         public void CalculateDeskQuote()
@@ -49,8 +53,27 @@ namespace MegaDesk_4_JonesCrossley
             }
 
             // Updates the QuoteAmount and QuoteDate
-            QuoteAmount = BASE_PRICE + LargeDeskPrice() + DrawerPrice() + SurfacePrice() + RushOrderPrice();
+            QuoteAmount = BASE_PRICE + LargeDeskPrice() + DrawerPrice() + materialPrice + RushOrderPrice();
             QuoteDate = DateTime.Now;
+
+            switch (material)
+            {
+                case "Laminate":
+                    materialPrice = (int)Desk.DesktopMaterials.Laminate;
+                    break;
+                case "Oak":
+                    materialPrice = (int)Desk.DesktopMaterials.Oak;
+                    break;
+                case "Rosewood":
+                    materialPrice = (int)Desk.DesktopMaterials.Rosewood;
+                    break;
+                case "Veneer":
+                    materialPrice = (int)Desk.DesktopMaterials.Veneer;
+                    break;
+                case "Pine":
+                    materialPrice = (int)Desk.DesktopMaterials.Pine;
+                    break;
+            }
         }
 
         private decimal DrawerPrice()
@@ -167,25 +190,8 @@ namespace MegaDesk_4_JonesCrossley
             // Using row and column variables, pick out the correct price
             return rushOrderPrice[row, column];
         }
-
-        private decimal SurfacePrice()
-        {
-            // Returns cost of surface material
-            switch (Desk.Surface)
-            {
-                case Desk.DesktopMaterials.Laminate:
-                    return 100;
-                case Desk.DesktopMaterials.Oak:
-                    return 200;
-                case Desk.DesktopMaterials.Pine:
-                    return 50;
-                case Desk.DesktopMaterials.Rosewood:
-                    return 300;
-                case Desk.DesktopMaterials.Veneer:
-                    return 125;
-                default:
-                    return 9999999;
-            }
-        }
+            
     }
 }
+
+
