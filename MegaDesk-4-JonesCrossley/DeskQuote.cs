@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -14,13 +15,12 @@ namespace MegaDesk_4_JonesCrossley
         public Desk Desk = new Desk();
         private const decimal BASE_PRICE = 200;
         private const decimal PER_DRAWER_PRICE = 50;
-        public int materialPrice = 0;
         private int[,] rushOrderPrice;
 
 
         public decimal QuoteAmount { get; set; }
         public DateTime QuoteDate { get; set; }
-        public string material { get => material; set => material = value; }
+        //public string Material { get => Material; set => Material = value; }
 
         public const int MIN_WIDTH = 24;
         public const int MAX_WIDTH = 96;
@@ -28,12 +28,6 @@ namespace MegaDesk_4_JonesCrossley
         public const int MAX_DEPTH = 48;
         public const int MIN_DRAWERS = 0;
         public const int MAX_DRAWERS = 7;
-        //public const int DEFAULT_PRODUCTION_DAYS = 14;
-
-        //private const decimal 
-
-        //public decimal QuoteAmount {get { return _QuoteAmount; }}
-        //public DateTime QuoteDate {get { return _QuoteDate; }}
 
         public enum RushDays
         {
@@ -53,27 +47,8 @@ namespace MegaDesk_4_JonesCrossley
             }
 
             // Updates the QuoteAmount and QuoteDate
-            QuoteAmount = BASE_PRICE + LargeDeskPrice() + DrawerPrice() + materialPrice + RushOrderPrice();
+            QuoteAmount = BASE_PRICE + LargeDeskPrice() + DrawerPrice() + (int)Desk.Surface + RushOrderPrice();
             QuoteDate = DateTime.Now;
-
-            switch (material)
-            {
-                case "Laminate":
-                    materialPrice = (int)Desk.DesktopMaterials.Laminate;
-                    break;
-                case "Oak":
-                    materialPrice = (int)Desk.DesktopMaterials.Oak;
-                    break;
-                case "Rosewood":
-                    materialPrice = (int)Desk.DesktopMaterials.Rosewood;
-                    break;
-                case "Veneer":
-                    materialPrice = (int)Desk.DesktopMaterials.Veneer;
-                    break;
-                case "Pine":
-                    materialPrice = (int)Desk.DesktopMaterials.Pine;
-                    break;
-            }
         }
 
         private decimal DrawerPrice()
@@ -106,9 +81,7 @@ namespace MegaDesk_4_JonesCrossley
                 //};
 
                 int[,] rushOrder = new int[3, 3];
-
-
-                string[] readPrices = File.ReadAllLines(@"Assets\rushOrderPrices.txt");
+                string[] readPrices = File.ReadAllLines(Program.RUSH_ORDER_PRICE_FILE);
 
                 if (!(readPrices.Length == 9))
                 {
@@ -190,7 +163,11 @@ namespace MegaDesk_4_JonesCrossley
             // Using row and column variables, pick out the correct price
             return rushOrderPrice[row, column];
         }
-            
+
+        public static implicit operator List<object>(DeskQuote v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -2,6 +2,9 @@
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MegaDesk_4_JonesCrossley
 {
@@ -10,15 +13,14 @@ namespace MegaDesk_4_JonesCrossley
         Form frmMainMenu;
         //Desk DeskDetails = new Desk();
         DeskQuote DQuote = new DeskQuote();
-        private const string FILE_NAME = "quotes.txt";
-
-
+ 
         public AddQuote(Form MainMenuForm)
         {
             InitializeComponent();
             frmMainMenu = MainMenuForm;
             LoadDrawersDDL();
             LoadRushDDL();
+            LoadSurfaceDDL();
         }
 
         private void BtnReturnToMainMenu_Click(object sender, EventArgs e)
@@ -36,7 +38,7 @@ namespace MegaDesk_4_JonesCrossley
             DQuote.Desk.DrawerCount = Convert.ToInt32(cmbNumDrawers.SelectedItem);
             string selectedComboSurface = cmbSurfaceMaterial.SelectedItem.ToString();
             bool comboSurfaceConverted;
-            comboSurfaceConverted = Enum.TryParse(selectedComboSurface, out Desk.DesktopMaterials selectedSurface);
+            comboSurfaceConverted = Enum.TryParse(selectedComboSurface, out Desk.DesktopMaterial selectedSurface);
             if (comboSurfaceConverted)
             {
                 DQuote.Desk.Surface = selectedSurface;
@@ -225,19 +227,12 @@ namespace MegaDesk_4_JonesCrossley
             //cmbRushDays.SelectedIndex = 0;
         }
 
-
-
-        //private void LoadSurfaceDDL()
-        //{
-        //    // Use list of values from Desk enumeration
-        //    //Desk.SurfaceType.Laminate
-
-        //    foreach (Desk.SurfaceType material in Enum.GetValues(typeof(Desk.SurfaceType)))
-        //    {
-        //        cmb
-        //        material
-        //    }
-        //}
+        private void LoadSurfaceDDL()
+        {
+            // Use list of values from Desk enumeration
+            List<Desk.DesktopMaterial> materials = Enum.GetValues(typeof(Desk.DesktopMaterial)).Cast<Desk.DesktopMaterial>().ToList();
+            cmbSurfaceMaterial.DataSource = materials;
+        }
 
         private bool SaveToQuoteFile()
         {
@@ -245,40 +240,32 @@ namespace MegaDesk_4_JonesCrossley
 
             try
             {
-                // Field order:
-                // CustomerName, QuoteDate, QuoteAmount, RushOrderDays, DeskWidth, DeskDepth, DeskDrawerCount, DeskSurfaceMaterial
+                List<DeskQuote> list;
 
-                const string FieldDelimiter = ",";
-                StreamWriter writer;
-                writer = new StreamWriter(FILE_NAME, append:true);
-                writer.WriteLine
-                (
-                    DQuote.CustomerName
-                    + FieldDelimiter + DQuote.QuoteDate
-                    + FieldDelimiter + DQuote.QuoteAmount
-                    + FieldDelimiter + (int)DQuote.RushOrderDays
-                    + FieldDelimiter + DQuote.Desk.Width
-                    + FieldDelimiter + DQuote.Desk.Depth
-                    + FieldDelimiter + DQuote.Desk.DrawerCount
-                    + FieldDelimiter + DQuote.Desk.Surface.ToString()
-               );
+                // Read the current JSON file and convert it to a list of quotes.
+                string JsonString = File.ReadAllText(Program.QUOTES_FILE_NAME);
+                list = JsonConvert.DeserializeObject<List<DeskQuote>>(JsonString);
+                
+                // If there are no quotes in the file, set the list to empty rather than null (we need a reference to the list).
+                if(list == null)
+                {
+                    list = new List<DeskQuote>();
+                }
 
-                // Clean up.
-                writer.Close();
-                writer.Dispose();
+                // Add the current quote to the list
+                list.Add(DQuote);
+                // Serialize the entire list to a string. Format it so it looks purty.
+                string outputJSON = JsonConvert.SerializeObject(list, Formatting.Indented);
+                // Write all the text back out to the JSON file. We are not appending. We are overwriting the entire file.
+                File.WriteAllText(Program.QUOTES_FILE_NAME, outputJSON);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return false;
+                throw e;
             }
             return true;
 
 
-
-        }
-
-        private void cmbSurfaceMaterial_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
         }
     }

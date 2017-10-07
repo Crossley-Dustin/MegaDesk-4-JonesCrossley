@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace MegaDesk_4_JonesCrossley
 {
     public partial class ViewAllQuotes : Form
     {
         MainMenu frmMainMenu;
-        const string FILE_NAME = "quotes.txt";
 
         public ViewAllQuotes(MainMenu mainMenu)
         {
@@ -20,23 +20,13 @@ namespace MegaDesk_4_JonesCrossley
         private void DisplayFileContents()
         {
             // Read file, display on form.
-            StreamReader reader = new StreamReader(FILE_NAME);
 
-            while (reader.EndOfStream == false)
-            {
-                string line = reader.ReadLine();
-
-                // Don't include empty lines
-                if (line.Length == 0)
-                    continue;
-
-                // Write the line out to a text box
-                TbFileContents.Text += line + Environment.NewLine;
-            }
-
-            // Clean up.
-            reader.Close();
-            reader.Dispose();
+            // Read the JSON file.
+            JsonSerializer ser = new JsonSerializer();
+            string JSONstring = File.ReadAllText(Program.QUOTES_FILE_NAME);
+            
+            // For now, just display the raw JSON text.
+            TbFileContents.Text += JSONstring;
         }
 
         private void BtnReturnToMainMenu_Click(object sender, EventArgs e)

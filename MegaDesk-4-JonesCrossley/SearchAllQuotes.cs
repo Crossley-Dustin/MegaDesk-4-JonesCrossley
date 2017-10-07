@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace MegaDesk_4_JonesCrossley
 {
@@ -9,7 +10,6 @@ namespace MegaDesk_4_JonesCrossley
     {
         MainMenu frmMainMenu;
         List<DeskQuote> lstDeskQuotes;
-        const string FILE_NAME = "quotes.txt";
 
         public SearchAllQuotes(MainMenu MainMenu)
         {
@@ -31,56 +31,31 @@ namespace MegaDesk_4_JonesCrossley
 
         private List<DeskQuote> GetQuotesFromFile()
         {
-            List<DeskQuote> list = new List<DeskQuote>();
+            List<DeskQuote> list;
 
             // Read file, create list of quotes
-            StreamReader reader = new StreamReader(FILE_NAME);
+            JsonSerializer ser = new JsonSerializer();
+            string JSONstring = File.ReadAllText(Program.QUOTES_FILE_NAME);
+            list = JsonConvert.DeserializeObject<List<DeskQuote>>(JSONstring);
 
-            while (reader.EndOfStream == false)
+            // Make sure our list is empty rather than null if there are no entries in the file.
+            if (list == null)
             {
-                DeskQuote quote = new DeskQuote();
-
-                string line = reader.ReadLine();
-                string[] fields = line.Split(',');
-
-                if (line.Length == 0)
-                    continue;
-
-                // Field order:
-                // CustomerName, QuoteDate, QuoteAmount, RushOrderDays, DeskWidth, DeskDepth, DeskDrawerCount, DeskSurfaceMaterial
-
-                quote.CustomerName = fields[0].ToString();
-                quote.QuoteDate = DateTime.Parse(fields[1]);
-                quote.QuoteAmount = decimal.Parse(fields[2]);
-                quote.RushOrderDays = (DeskQuote.RushDays)Convert.ToInt32(int.Parse(fields[3]));
-                quote.Desk.Width = int.Parse(fields[4]);
-                quote.Desk.Depth = int.Parse(fields[5]);
-                quote.Desk.DrawerCount = int.Parse(fields[6]);
-                bool comboSurfaceConverted;
-                comboSurfaceConverted = Enum.TryParse(fields[7], out Desk.DesktopMaterials selectedSurface);
-                if (comboSurfaceConverted)
-                    quote.Desk.Surface = selectedSurface;
-                
-                // Save quote to list.
-                list.Add(quote);
-
+                list = new List<DeskQuote>();
             }
-            
-            // Clean up.
-            reader.Close();
-            reader.Dispose();
-
+        
             return list;
         }
 
         private void CmbSurfaceSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Desk.DesktopMaterials SurfaceText;
-            if (Enum.TryParse(CmbSurfaceSelect.SelectedItem.ToString(), out Desk.DesktopMaterials selectedSurface))
+            Desk.DesktopMaterial SurfaceText;
+            if (Enum.TryParse(CmbSurfaceSelect.SelectedItem.ToString(), out Desk.DesktopMaterial selectedSurface))
                 SurfaceText = selectedSurface;
             else
                 return;
 
+            // Generate a filtered list of quotes based on the selected combobox item.
             List<DeskQuote> filteredList = new List<DeskQuote>();
 
             foreach(DeskQuote quote in lstDeskQuotes)
@@ -91,7 +66,7 @@ namespace MegaDesk_4_JonesCrossley
                 }
             }
 
-            // Load Listview based on filtered list
+            // Load Listview based on filtered list (show the user what we found).
             LoadList(filteredList);
 
             // Enable view button
@@ -100,29 +75,11 @@ namespace MegaDesk_4_JonesCrossley
 
         private void LoadList(List<DeskQuote> quotes)
         {
-            //// Set up basic details about listview.
-            //lvQuotes.View = View.Details;
-            //lvQuotes.GridLines = true;
-            //lvQuotes.FullRowSelect = true;
-
-
-            //// Add column headers.
-            //lvQuotes.Columns.Add("Surface Material");
-            //lvQuotes.AutoResizeColumn(0,ColumnHeaderAutoResizeStyle.HeaderSize);
-            //lvQuotes.Columns.Add("Quote Date");
-            //lvQuotes.AutoResizeColumn(1, ColumnHeaderAutoResizeStyle.HeaderSize);
-
+            // Set List datasource.
             lbQuotes.DataSource = quotes;
             lbQuotes.DisplayMember = "CustomerName";
             lbQuotes.ValueMember = "QuoteDate";
-            
-            //foreach (DeskQuote quote in quotes)
-            //{
-            //    lbQuotes.Items.Add(quote);
-            //}
-                
-            
-            
+                       
         }
 
         private void BtnViewQuote_Click(object sender, EventArgs e)

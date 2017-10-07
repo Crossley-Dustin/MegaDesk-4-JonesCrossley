@@ -35,13 +35,14 @@
             // 
             // TbFileContents
             // 
-            this.TbFileContents.Enabled = false;
             this.TbFileContents.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TbFileContents.Location = new System.Drawing.Point(38, 81);
             this.TbFileContents.Multiline = true;
             this.TbFileContents.Name = "TbFileContents";
+            this.TbFileContents.ReadOnly = true;
+            this.TbFileContents.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TbFileContents.Size = new System.Drawing.Size(594, 344);
-            this.TbFileContents.TabIndex = 0;
+            this.TbFileContents.TabIndex = 1;
             // 
             // label1
             // 
@@ -59,7 +60,7 @@
             this.BtnReturnToMainMenu.Location = new System.Drawing.Point(38, 452);
             this.BtnReturnToMainMenu.Name = "BtnReturnToMainMenu";
             this.BtnReturnToMainMenu.Size = new System.Drawing.Size(594, 50);
-            this.BtnReturnToMainMenu.TabIndex = 7;
+            this.BtnReturnToMainMenu.TabIndex = 0;
             this.BtnReturnToMainMenu.Text = "Return to Menu";
             this.BtnReturnToMainMenu.UseVisualStyleBackColor = true;
             this.BtnReturnToMainMenu.Click += new System.EventHandler(this.BtnReturnToMainMenu_Click);
