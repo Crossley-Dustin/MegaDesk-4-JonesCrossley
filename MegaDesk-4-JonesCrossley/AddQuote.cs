@@ -36,7 +36,7 @@ namespace MegaDesk_4_JonesCrossley
             DQuote.Desk.DrawerCount = Convert.ToInt32(cmbNumDrawers.SelectedItem);
             string selectedComboSurface = cmbSurfaceMaterial.SelectedItem.ToString();
             bool comboSurfaceConverted;
-            comboSurfaceConverted = Enum.TryParse(selectedComboSurface, out Desk.SurfaceType selectedSurface);
+            comboSurfaceConverted = Enum.TryParse(selectedComboSurface, out Desk.DesktopMaterials selectedSurface);
             if (comboSurfaceConverted)
             {
                 DQuote.Desk.Surface = selectedSurface;
@@ -274,6 +274,11 @@ namespace MegaDesk_4_JonesCrossley
             return true;
 
 
+
+        }
+
+        private void cmbSurfaceMaterial_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

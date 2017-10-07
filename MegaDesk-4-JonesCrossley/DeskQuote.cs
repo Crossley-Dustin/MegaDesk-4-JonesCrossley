@@ -51,8 +51,10 @@ namespace MegaDesk_4_JonesCrossley
         private decimal LargeDeskPrice()
         {
             // Returns cost of large desks > 1000 sq in.
-            if (Desk.Area > 1000)
-                return Desk.Area - 1000;
+            if (Desk.getSurfaceArea() > 1000)
+            {
+                return Desk.getSurfaceArea() - 1000;
+            }
             else
                 return 0;
         }
@@ -64,7 +66,7 @@ namespace MegaDesk_4_JonesCrossley
                 return 0;
 
             // Returns cost of rush order.
-            if (Desk.Area < 1000)
+            if (Desk.getSurfaceArea() < 1000)
             {
                 switch (RushOrderDays)
                 {
@@ -78,7 +80,7 @@ namespace MegaDesk_4_JonesCrossley
                         return 9999999;
                 }
             }
-            else if (Desk.Area >= 1000 && Desk.Area <= 2000)
+            else if (Desk.getSurfaceArea() >= 1000 && Desk.getSurfaceArea() <= 2000)
             {
                 switch (RushOrderDays)
                 {
@@ -113,15 +115,15 @@ namespace MegaDesk_4_JonesCrossley
             // Returns cost of surface material
             switch (Desk.Surface)
             {
-                case Desk.SurfaceType.Laminate:
+                case Desk.DesktopMaterials.Laminate:
                     return 100;
-                case Desk.SurfaceType.Oak:
+                case Desk.DesktopMaterials.Oak:
                     return 200;
-                case Desk.SurfaceType.Pine:
+                case Desk.DesktopMaterials.Pine:
                     return 50;
-                case Desk.SurfaceType.Rosewood:
+                case Desk.DesktopMaterials.Rosewood:
                     return 300;
-                case Desk.SurfaceType.Veneer:
+                case Desk.DesktopMaterials.Veneer:
                     return 125;
                 default:
                     return 9999999;

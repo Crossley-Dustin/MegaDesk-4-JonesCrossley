@@ -57,7 +57,7 @@ namespace MegaDesk_4_JonesCrossley
                 quote.Desk.Depth = int.Parse(fields[5]);
                 quote.Desk.DrawerCount = int.Parse(fields[6]);
                 bool comboSurfaceConverted;
-                comboSurfaceConverted = Enum.TryParse(fields[7], out Desk.SurfaceType selectedSurface);
+                comboSurfaceConverted = Enum.TryParse(fields[7], out Desk.DesktopMaterials selectedSurface);
                 if (comboSurfaceConverted)
                     quote.Desk.Surface = selectedSurface;
                 
@@ -75,8 +75,8 @@ namespace MegaDesk_4_JonesCrossley
 
         private void CmbSurfaceSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Desk.SurfaceType SurfaceText;
-            if (Enum.TryParse(CmbSurfaceSelect.SelectedItem.ToString(), out Desk.SurfaceType selectedSurface))
+            Desk.DesktopMaterials SurfaceText;
+            if (Enum.TryParse(CmbSurfaceSelect.SelectedItem.ToString(), out Desk.DesktopMaterials selectedSurface))
                 SurfaceText = selectedSurface;
             else
                 return;

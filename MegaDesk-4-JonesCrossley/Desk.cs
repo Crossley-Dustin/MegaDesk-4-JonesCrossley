@@ -6,19 +6,16 @@ namespace MegaDesk_4_JonesCrossley
         public int Width { get; set; }
         public int Depth { get; set; }
         public int DrawerCount { get; set; }
-        public SurfaceType Surface { get; set; }
+        public DesktopMaterials Surface { get; set; }
 
-        public enum SurfaceType{
-            Laminate,
-            Oak,
-            Rosewood,
-            Veneer,
-            Pine
-        }
+        public enum DesktopMaterials {
+            Laminate = 100, Oak = 200, Rosewood = 300, Veneer = 125, Pine = 50};
 
-        public int Area
+        public int getSurfaceArea()
         {
-            get { return Width * Depth; }
+            int area;
+            area = Width * Depth;
+            return area;
         }
     }
 }
