@@ -268,5 +268,10 @@ namespace MegaDesk_4_JonesCrossley
 
 
         }
+
+        private void AddQuote_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

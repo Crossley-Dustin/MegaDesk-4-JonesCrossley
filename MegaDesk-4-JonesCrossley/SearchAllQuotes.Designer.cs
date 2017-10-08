@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SearchAllQuotes));
             this.CmbSurfaceSelect = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lbQuotes = new System.Windows.Forms.ListBox();
@@ -45,9 +46,10 @@
             "Pine",
             "Rosewood",
             "Veneer"});
-            this.CmbSurfaceSelect.Location = new System.Drawing.Point(44, 60);
+            this.CmbSurfaceSelect.Location = new System.Drawing.Point(66, 92);
+            this.CmbSurfaceSelect.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CmbSurfaceSelect.Name = "CmbSurfaceSelect";
-            this.CmbSurfaceSelect.Size = new System.Drawing.Size(368, 32);
+            this.CmbSurfaceSelect.Size = new System.Drawing.Size(550, 40);
             this.CmbSurfaceSelect.TabIndex = 0;
             this.CmbSurfaceSelect.SelectedIndexChanged += new System.EventHandler(this.CmbSurfaceSelect_SelectedIndexChanged);
             // 
@@ -55,9 +57,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(40, 30);
+            this.label1.Location = new System.Drawing.Point(60, 46);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(234, 24);
+            this.label1.Size = new System.Drawing.Size(356, 32);
             this.label1.TabIndex = 1;
             this.label1.Text = "Search by Surface Material";
             // 
@@ -65,18 +68,20 @@
             // 
             this.lbQuotes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbQuotes.FormattingEnabled = true;
-            this.lbQuotes.ItemHeight = 24;
-            this.lbQuotes.Location = new System.Drawing.Point(44, 114);
+            this.lbQuotes.ItemHeight = 32;
+            this.lbQuotes.Location = new System.Drawing.Point(66, 175);
+            this.lbQuotes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.lbQuotes.Name = "lbQuotes";
-            this.lbQuotes.Size = new System.Drawing.Size(368, 196);
+            this.lbQuotes.Size = new System.Drawing.Size(550, 292);
             this.lbQuotes.TabIndex = 3;
             // 
             // BtnViewQuote
             // 
             this.BtnViewQuote.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnViewQuote.Location = new System.Drawing.Point(44, 331);
+            this.BtnViewQuote.Location = new System.Drawing.Point(66, 509);
+            this.BtnViewQuote.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnViewQuote.Name = "BtnViewQuote";
-            this.BtnViewQuote.Size = new System.Drawing.Size(368, 50);
+            this.BtnViewQuote.Size = new System.Drawing.Size(552, 77);
             this.BtnViewQuote.TabIndex = 4;
             this.BtnViewQuote.Text = "View Selected Quote";
             this.BtnViewQuote.UseVisualStyleBackColor = true;
@@ -85,9 +90,10 @@
             // BtnReturnToMainMenu
             // 
             this.BtnReturnToMainMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnReturnToMainMenu.Location = new System.Drawing.Point(44, 395);
+            this.BtnReturnToMainMenu.Location = new System.Drawing.Point(66, 608);
+            this.BtnReturnToMainMenu.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.BtnReturnToMainMenu.Name = "BtnReturnToMainMenu";
-            this.BtnReturnToMainMenu.Size = new System.Drawing.Size(368, 50);
+            this.BtnReturnToMainMenu.Size = new System.Drawing.Size(552, 77);
             this.BtnReturnToMainMenu.TabIndex = 5;
             this.BtnReturnToMainMenu.Text = "Return To Main Menu";
             this.BtnReturnToMainMenu.UseVisualStyleBackColor = true;
@@ -95,16 +101,18 @@
             // 
             // SearchAllQuotes
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 473);
+            this.ClientSize = new System.Drawing.Size(698, 728);
             this.Controls.Add(this.BtnReturnToMainMenu);
             this.Controls.Add(this.BtnViewQuote);
             this.Controls.Add(this.lbQuotes);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CmbSurfaceSelect);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SearchAllQuotes";
-            this.Text = "SearchAllQuotes";
+            this.Text = "Search All Quotes";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SearchAllQuotes_FormClosing);
             this.Load += new System.EventHandler(this.SearchAllQuotes_Load);
             this.ResumeLayout(false);
